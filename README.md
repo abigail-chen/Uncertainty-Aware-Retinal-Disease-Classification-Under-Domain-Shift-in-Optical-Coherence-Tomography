@@ -34,7 +34,7 @@ External evaluation was performed on three independent OCT datasets:
 | Dataset           | Link                                                                                                                                     |        Classes Used | Number of Images |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------: | ---------------: |
 | Srinivasan / DUKE | [https://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm](https://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)           | DRUSEN, DME, NORMAL |            3,231 |
-| OCTDL             | [https://data.mendeley.com/datasets/sncdhf53xc/4](https://data.mendeley.com/datasets/sncdhf53xc/4)                                       |    CNV, DME, NORMAL |            2,064 |
+| OCTDL             | [https://data.mendeley.com/datasets/sncdhf53xc/4](https://data.mendeley.com/datasets/sncdhf53xc/4)                                       |    CNV, DME, NORMAL |            1,710 |
 | OCTID             | [https://www.openicpsr.org/openicpsr/project/108503/version/V1/view](https://www.openicpsr.org/openicpsr/project/108503/version/V1/view) |         CNV, NORMAL |              261 |
 
 These external datasets differ in scanner type, acquisition protocol, and class composition, allowing evaluation of cross-dataset generalization under domain shift.
