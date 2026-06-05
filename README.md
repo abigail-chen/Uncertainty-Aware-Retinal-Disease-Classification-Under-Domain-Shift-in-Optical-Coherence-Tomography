@@ -1,5 +1,3 @@
-Here is a ready-to-copy `README.md` for your GitHub repo. I based the content on your paper’s stated datasets, model setup, ENN formulation, and evaluation design. 
-
 # Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography
 
 This repository contains code for the project:
