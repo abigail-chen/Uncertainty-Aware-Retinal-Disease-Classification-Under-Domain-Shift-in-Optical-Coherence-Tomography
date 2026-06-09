@@ -61,7 +61,7 @@ Users should download the datasets from their original sources and organize them
 │   │   ├── eval_external_baseline.py
 │   │   ├── eval_external_enn.py
 │   │   ├── tau_sweep_normal_threshold.py
-│   │   ├── evaluate_umass_filtering.py
+│   │   ├── umass_thresholding.py
 │   │   └── selective_coverage_accuracy_umass.py
 │   │
 │   └── data/
