@@ -59,6 +59,15 @@ Users should download the original datasets from their official sources and upda
 ├── requirements.txt
 ├── .gitignore
 │
+├── scripts/
+│   ├── 01_train_baseline.sh
+│   ├── 02_train_enn.sh
+│   ├── 03_eval_external_baseline.sh
+│   ├── 04_eval_external_enn.sh
+│   ├── 05_tau_sweep_normal_threshold.sh
+│   ├── 06_umass_thresholding.sh
+│   └── 07_selective_coverage_accuracy_umass.sh
+│
 └── src/
     ├── data/
     │   ├── Kermany/
@@ -87,7 +96,8 @@ Users should download the original datasets from their official sources and upda
         └── selective_coverage_accuracy_umass.py
 ```
 
-Detailed command-line examples can be placed in a separate `scripts/` folder if needed. The README keeps only the high-level workflow.
+The `src/training/` folder contains the main training code for the softmax baseline and ENN. The `src/evaluation/` folder contains external evaluation, NORMAL-threshold tuning, u-mass thresholding, and selective prediction analysis. The `scripts/` folder provides reproducible command-line wrappers for running the training and evaluation workflow.
+
 
 ## Environment Setup
 
