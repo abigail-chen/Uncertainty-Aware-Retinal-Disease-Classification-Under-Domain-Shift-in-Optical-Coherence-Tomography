@@ -1,85 +1,96 @@
 # Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography
 
-This repository contains code for the project:
+This repository contains code for the paper:
 
 **Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography**
 
-The project investigates whether an Evidential Neural Network (ENN) can improve the reliability of retinal optical coherence tomography (OCT) disease classification compared with a standard ResNet18 softmax baseline, especially when evaluated on external datasets collected under different scanner and acquisition conditions.
+The project investigates whether an Evidential Neural Network (ENN) can improve the reliability of retinal optical coherence tomography (OCT) disease classification compared with a standard ResNet18 softmax baseline, especially under domain shift across external datasets.
 
-## Project Overview
+## Overview
 
-Deep learning models for retinal OCT classification often perform well on internal benchmark datasets, but their reliability may decrease when applied to external data from different sources. This project studies this problem by comparing:
+Deep learning models for retinal OCT classification can perform well on internal benchmark datasets but may become less reliable when evaluated on external data collected with different scanners, acquisition protocols, or class distributions.
 
-1. A standard **ResNet18 softmax classifier**
-2. An **Evidential Neural Network (ENN)** using the same ResNet18 backbone
+This project compares two models:
 
-The ENN predicts Dirichlet evidence rather than only softmax probabilities, allowing estimation of both class probabilities and predictive uncertainty. The main goal is not only to maximize internal accuracy, but also to evaluate robustness, calibration, and uncertainty behavior under domain shift.
+1. **Softmax baseline:** ResNet18 with a standard softmax classifier.
+2. **Uncertainty-aware model:** Evidential Neural Network using the same ResNet18 backbone.
+
+The ENN produces Dirichlet-based evidence, allowing prediction of both class probabilities and uncertainty. The main goal is to evaluate robustness, calibration, and uncertainty-aware decision support under domain shift.
 
 ## Datasets
 
 ### Development Dataset
 
-The model was trained and internally evaluated using the Kermany OCT dataset:
+The Kermany OCT dataset was used for model training and internal testing.
 
-* Dataset: Kermany OCT
-* Link: [https://data.mendeley.com/datasets/rscbjbr9sj/1](https://data.mendeley.com/datasets/rscbjbr9sj/1)
-* Classes: `CNV`, `DME`, `DRUSEN`, `NORMAL`
-* Training set: 20,000 images, with 5,000 images per class
-* Internal test set: 1,000 images, with 250 images per class
+| Dataset     | Classes                  | Use                           |
+| ----------- | ------------------------ | ----------------------------- |
+| Kermany OCT | CNV, DME, DRUSEN, NORMAL | Training and internal testing |
 
-### External Datasets
+The final experiments used:
+
+* 20,000 training images, with 5,000 images per class
+* 1,000 internal test images, with 250 images per class
+
+### External Evaluation Datasets
 
 External evaluation was performed on three independent OCT datasets:
 
-| Dataset           | Link                                                                                                                                     |        Classes Used | Number of Images |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------: | ---------------: |
-| Srinivasan / DUKE | [https://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm](https://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm)           | DRUSEN, DME, NORMAL |            3,231 |
-| OCTDL             | [https://data.mendeley.com/datasets/sncdhf53xc/4](https://data.mendeley.com/datasets/sncdhf53xc/4)                                       |    CNV, DME, NORMAL |            1,710 |
-| OCTID             | [https://www.openicpsr.org/openicpsr/project/108503/version/V1/view](https://www.openicpsr.org/openicpsr/project/108503/version/V1/view) |         CNV, NORMAL |              261 |
+| Dataset           | Classes used        | Number of images |
+| ----------------- | ------------------- | ---------------- |
+| Srinivasan / DUKE | DRUSEN, DME, NORMAL | 3,231            |
+| OCTDL             | CNV, DME, NORMAL    | 1,710            |
+| OCTID             | CNV, NORMAL         | 261              |
 
-These external datasets differ in scanner type, acquisition protocol, and class composition, allowing evaluation of cross-dataset generalization under domain shift.
+These datasets differ in class composition, scanner type, and acquisition conditions, providing a realistic evaluation of model behavior under domain shift.
 
-## Important Data Note
+## Data Availability
 
-Raw OCT images are **not included** in this repository due to dataset size and licensing restrictions.
+Raw OCT images are **not included** in this repository because of dataset size and redistribution restrictions.
 
-Users should download the datasets from their original sources and organize them locally according to the expected folder or CSV structure. Metadata CSV files may be provided to show the expected format, but image paths must be updated for each local machine or server.
+Users should download the original datasets from their official sources and update the CSV files so that image paths point to the correct local locations.
 
 ## Repository Structure
 
 ```text
+.
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 │
-├── src/
-│   ├── training/
-│   │   ├── train_baseline_kermany.py
-│   │   └── train_enn_kermany.py
-│   │
-│   ├── evaluation/
-│   │   ├── eval_external_baseline.py
-│   │   ├── eval_external_enn.py
-│   │   ├── tau_sweep_normal_threshold.py
-│   │   ├── umass_thresholding.py
-│   │   └── selective_coverage_accuracy_umass.py
-│   │
-│   └── data/
-│       ├── datasets.py
-│
-├── scripts/
-    ├── 01_train_baseline.sh
-    ├── 02_train_enn.sh
-    ├── 03_eval_external_baseline.sh
-    ├── 04_eval_external_enn.sh
-    ├── 05_tau_sweep.sh
-    ├── 06_umass_filtering.sh
-    └── 07_selective_coverage.sh
+└── src/
+    ├── data/
+    │   ├── Kermany/
+    │   │   ├── train_subset.csv
+    │   │   ├── val.csv
+    │   │   └── test_official.csv
+    │   │
+    │   ├── external_OCTDL/
+    │   │   └── labels_for_eval_4class_MAPPED.csv
+    │   │
+    │   ├── external_OCTID/
+    │   │   └── labels_for_eval_4class_MAPPED.csv
+    │   │
+    │   └── external_Srinivasan/
+    │       └── labels_for_eval_4class_MAPPED.csv
+    │
+    ├── training/
+    │   ├── train_baseline_Kermany.py
+    │   └── train_enn_kermany.py
+    │
+    └── evaluation/
+        ├── eval_external_baseline.py
+        ├── eval_external_enn.py
+        ├── tau_sweep_normal_threshold.py
+        ├── umass_thresholding.py
+        └── selective_coverage_accuracy_umass.py
+```
 
+Detailed command-line examples can be placed in a separate `scripts/` folder if needed. The README keeps only the high-level workflow.
 
 ## Environment Setup
 
-Create a virtual environment:
+Create and activate a Python environment:
 
 ```bash
 python -m venv .venv
@@ -92,99 +103,72 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+The main dependencies include PyTorch, torchvision, NumPy, pandas, Pillow, scikit-learn, and matplotlib.
+
 ## Expected CSV Format
 
-Training and evaluation scripts expect CSV files containing image paths and labels.
+The training and evaluation scripts use CSV files to locate images and labels.
 
-A typical CSV should contain columns such as:
-
-```text
-dst_path,label,patient_id，split
-```
-
-Example:
+For Kermany training and internal testing, the expected columns include:
 
 ```text
-/path/to/image1.jpeg,CNV,patient_001，train
-/path/to/image2.jpeg,NORMAL,patient_002,test
+dst_path,label,patient_id,split
 ```
 
-For external datasets, the CSV should contain at least:
+For external evaluation, the expected columns include at least:
 
 ```text
-dst_path,label，patient_id
+dst_path,label,patient_id
 ```
+
+The `dst_path` column should contain the full path to each OCT image on the local machine or server.
 
 ## Model Training
 
-### 1. Train the Softmax Baseline
+### Baseline Model
 
-The baseline model is a ResNet18 classifier trained using cross-entropy loss.
+The baseline is a ResNet18 softmax classifier trained using cross-entropy loss.
 
-Example command:
+The final experiment used:
 
-```bash
-python src/training/train_baseline_kermany.py \
-  --arch resnet18 \
-  --pretrained 1 \
-  --img_size 224 \
-  --batch_size 64 \
-  --epochs 50 \
-  --lr 3e-4 \
-  --weight_decay 1e-4 \
-  --balance fixed_per_class \
-  --per_class 5000 \
-  --scheduler cosine \
-  --early_stop 0
-```
+* ImageNet-pretrained ResNet18
+* Image size: 224 × 224
+* Batch size: 64
+* Epochs: 50
+* Optimizer: AdamW
+* Learning rate: 3e-4
+* Weight decay: 1e-5
+* Random seed: 42
+* Early stopping disabled
 
-Expected outputs include:
+Training is handled by:
 
 ```text
-best.pt
-history.json
-test_metrics.json
-test_uncertainty.csv
+src/training/train_baseline_Kermany.py
 ```
 
-### 2. Train the Evidential Neural Network
+### Evidential Neural Network
 
-The ENN uses the same ResNet18 backbone but replaces the softmax output with an evidential output layer.
+The ENN uses the same ResNet18 backbone but replaces the standard softmax output with an evidential output layer. The model estimates class probabilities and predictive uncertainty through Dirichlet evidence.
 
-The model outputs non-negative evidence values. These are converted to Dirichlet parameters:
+The final ENN setting used:
+
+* ResNet18 backbone
+* Batch size: 64
+* Epochs: 50
+* Learning rate: 3e-4
+* Weight decay: 1e-5
+* λ = 0.7
+* KL warm-up during the first 10 epochs
+* Early stopping disabled
+
+Training is handled by:
 
 ```text
-alpha = evidence + 1
+src/training/train_enn_kermany.py
 ```
 
-The expected class probability is computed from the Dirichlet mean, and predictive uncertainty is estimated using uncertainty mass:
-
-```text
-u_mass = K / S
-```
-
-where `K` is the number of classes and `S` is the total Dirichlet strength.
-
-Example command:
-
-```bash
-python src/training/train_enn_kermany.py \
-  --train_csv metadata/kermany/train_subset.csv \
-  --val_csv metadata/kermany/val.csv \
-  --test_csv metadata/kermany/test_official.csv \
-  --arch resnet18 \
-  --pretrained 1 \
-  --img_size 224 \
-  --batch_size 64 \
-  --epochs 50 \
-  --lr 3e-4 \
-  --weight_decay 1e-4 \
-  --lam 0.7 \
-  --early_stop 0 \
-  --runs_dir runs/enn_kermany
-```
-
-Expected outputs include:
+The main output files include:
 
 ```text
 best.pt
@@ -195,68 +179,25 @@ test_uncertainty_with_probs.csv
 
 ## External Evaluation
 
-### Baseline External Evaluation
+External evaluation compares model performance on OCTDL, OCTID, and Srinivasan.
 
-Example command:
-
-```bash
-python src/evaluation/eval_external_baseline.py \
-  --ckpt runs/baseline_kermany/best.pt \
-  --data_root data/octdl \
-  --labels_csv metadata/external/octdl_labels.csv \
-  --arch resnet18 \
-  --img_size 224 \
-  --batch_size 64 \
-  --use_split all \
-  --out_json results/octdl_baseline_external.json \
-  --out_csv results/octdl_baseline_predictions.csv
-```
-
-### ENN External Evaluation
-
-Example command:
-
-```bash
-python src/evaluation/eval_external_enn.py \
-  --ckpt runs/enn_kermany/best.pt \
-  --data_root data/octdl \
-  --labels_csv metadata/external/octdl_labels.csv \
-  --arch resnet18 \
-  --img_size 224 \
-  --batch_size 64 \
-  --use_split all \
-  --out_json results/octdl_enn_external.json \
-  --out_csv results/octdl_enn_predictions.csv
-```
-
-The ENN prediction CSV should include columns such as:
+Baseline external evaluation is handled by:
 
 ```text
-path
-y_true
-y_pred
-y_true_label
-y_pred_label
-prob_CNV
-prob_DME
-prob_DRUSEN
-prob_NORMAL
-alpha_CNV
-alpha_DME
-alpha_DRUSEN
-alpha_NORMAL
-entrophy
-strength
-u_mass
-p_max
-correct
+src/evaluation/eval_external_baseline.py
 ```
 
-These columns are used by the threshold-tuning and selective-prediction scripts.
+ENN external evaluation is handled by:
+
+```text
+src/evaluation/eval_external_enn.py
+```
+
+The ENN prediction outputs are used by the threshold-tuning and uncertainty-based evaluation scripts.
 
 ## Threshold Tuning
 
-A NORMAL-class threshold was evaluated to reduce disease-to-normal errors.
+NORMAL-threshold tuning was used to reduce disease-to-normal misclassification.
 
 The rule is:
 
@@ -267,116 +208,107 @@ else:
     predict the disease class with the highest probability
 ```
 
-Example command:
-
-```bash
-python src/evaluation/tau_sweep_normal_threshold.py \
-  --internal_csv results/internal_enn_predictions.csv \
-  --srin_csv results/srinivasan_enn_predictions.csv \
-  --octdl_csv results/octdl_enn_predictions.csv \
-  --octid_csv results/octid_enn_predictions.csv \
-  --tau_csv configs/tau_values.csv \
-  --out_csv results/tau_sweep_summary.csv \
-  --criterion safety
-```
-
 The final threshold used in the paper was:
 
 ```text
 tau = 0.27
 ```
 
+The threshold sweep is handled by:
+
+```text
+src/evaluation/tau_sweep_normal_threshold.py
+```
+
 ## Uncertainty-Based Filtering
 
-Uncertainty-based filtering uses ENN uncertainty mass, `u_mass`, to retain lower-uncertainty cases.
+The ENN produces an uncertainty mass value, `u_mass`, where larger values indicate higher uncertainty.
 
-For a fixed threshold such as:
+Uncertainty-based filtering was evaluated using:
 
 ```text
 u_mass <= 0.85
 ```
 
-the script keeps only predictions with uncertainty mass below or equal to the threshold and computes performance on retained cases.
+This keeps lower-uncertainty predictions and evaluates performance only on retained cases.
 
-Example command:
+The corresponding script is:
 
-```bash
-python src/evaluation/evaluate_umass_filtering.py \
-  --internal_csv results/internal_enn_predictions.csv \
-  --srin_csv results/srinivasan_enn_predictions.csv \
-  --octdl_csv results/octdl_enn_predictions.csv \
-  --octid_csv results/octid_enn_predictions.csv \
-  --umass_threshold 0.85 \
-  --out_csv results/umass_filtering_summary.csv
+```text
+src/evaluation/umass_thresholding.py
 ```
 
 ## Selective Prediction
 
-Selective prediction evaluates model performance after retaining only the lowest-uncertainty cases.
+Selective prediction evaluates how performance changes as the most uncertain cases are deferred.
 
 The procedure is:
 
 ```text
-1. Sort cases by u_mass from low to high.
-2. Retain the lowest-uncertainty cases at a selected coverage level.
-3. Compute accuracy and other metrics only on retained cases.
+1. Sort predictions by u_mass from low to high.
+2. Retain the lowest-uncertainty cases.
+3. Compute accuracy on retained cases.
+4. Repeat across different coverage levels.
 ```
 
-Example command:
+Selective coverage analysis is handled by:
 
-```bash
-python src/evaluation/selective_coverage_accuracy_umass.py \
-  --internal_csv results/internal_enn_predictions.csv \
-  --srin_csv results/srinivasan_enn_predictions.csv \
-  --octdl_csv results/octdl_enn_predictions.csv \
-  --octid_csv results/octid_enn_predictions.csv \
-  --out_csv results/selective_coverage_accuracy_umass.csv
+```text
+src/evaluation/selective_coverage_accuracy_umass.py
 ```
 
-This produces a CSV table showing retained-case accuracy from 100% coverage down to lower coverage levels, such as 90%, 80%, 70%, 60%, and 50%.
+In the final paper, selective prediction was reported at approximately 90% retained coverage.
 
 ## Evaluation Metrics
 
-The main evaluation metrics are:
+The main metrics are:
 
 * Multiclass accuracy
 * Disease-versus-normal ROC-AUC
 * Macro false-negative rate
 * Macro false-positive rate
-* Expected calibration error, or ECE
-* Adaptive ECE
+* Expected calibration error
+* Adaptive expected calibration error
 * Brier score
+* Retained coverage for selective prediction
 
-External results are reported for each dataset and also averaged across the three external datasets.
+External metrics are reported for each dataset and also averaged across the three external datasets.
 
 ## Main Findings
 
 The softmax baseline achieved higher internal accuracy, but showed a larger internal-to-external accuracy drop under domain shift.
 
-The ENN showed more stable external performance and provided useful uncertainty estimates. Threshold tuning and uncertainty-based selective prediction further improved retained-case performance and reduced false-negative and false-positive rates.
+The ENN did not maximize in-distribution accuracy, but it provided more stable external performance and more informative uncertainty estimates. Threshold tuning and uncertainty-based selective prediction further improved retained-case performance and reduced both false-negative and false-positive rates.
 
-At approximately 90% retained coverage, selective prediction improved average external accuracy and reduced error rates on retained cases, supporting the use of ENN uncertainty as a decision-support signal.
+At approximately 90% retained coverage, selective prediction improved average external accuracy and reduced error rates on retained cases, supporting uncertainty as a practical decision-support signal for retinal OCT classification under domain shift.
 
 ## Reproducibility Notes
 
-To reproduce the experiments:
+To reproduce the workflow:
 
-1. Download the datasets from the original sources.
-2. Update the CSV files so that `dst_path` points to the correct local image paths.
+1. Download the original OCT datasets.
+2. Update the CSV files so that `dst_path` points to local image paths.
 3. Install dependencies using `requirements.txt`.
 4. Train the baseline and ENN models.
-5. Run external evaluation on Srinivasan, OCTDL, and OCTID.
-6. Run threshold tuning and selective prediction scripts.
-7. Generate summary tables and figures.
+5. Evaluate both models on the external datasets.
+6. Run threshold tuning and uncertainty-based selective prediction analysis.
 
-Because raw OCT datasets are not redistributed in this repository, exact reproduction requires access to the original datasets and correct local path configuration.
+Because raw OCT images are not redistributed in this repository, exact reproduction requires access to the original datasets and correct local path configuration.
 
+## Citation
+
+If you use this repository, please cite the corresponding paper:
+
+```text
+Chen, A. X., Jafarpisheh, N., Namdar, K., & Tyrrell, P. N.
+Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography.
+```
 
 ## Contact
 
-For questions about the repository, please contact:
+For questions, please contact:
 
-```
+```text
 abigail.chen@mail.utoronto.ca
 ```
 
