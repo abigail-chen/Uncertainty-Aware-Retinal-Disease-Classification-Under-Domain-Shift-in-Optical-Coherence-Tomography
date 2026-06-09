@@ -48,7 +48,6 @@ Users should download the datasets from their original sources and organize them
 ## Repository Structure
 
 ```text
-.
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
@@ -65,14 +64,8 @@ Users should download the datasets from their original sources and organize them
 │   │   ├── evaluate_umass_filtering.py
 │   │   └── selective_coverage_accuracy_umass.py
 │   │
-│   ├── visualization/
-│   │   ├── plot_main_results.py
-│   │   ├── plot_reliability.py
-│   │   └── gradcam.py
-│   │
 │   └── data/
 │       ├── datasets.py
-│       └── transforms.py
 │
 ├── scripts/
     ├── 01_train_baseline.sh
