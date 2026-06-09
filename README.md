@@ -52,24 +52,6 @@ Users should download the datasets from their original sources and organize them
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
-├── LICENSE
-│
-├── configs/
-│   ├── baseline_resnet18.yaml
-│   ├── enn_lam0p7.yaml
-│   ├── tau_threshold.yaml
-│   └── selective_prediction.yaml
-│
-├── metadata/
-│   ├── dataset_description.md
-│   ├── kermany/
-│   │   ├── train_subset.csv
-│   │   ├── val.csv
-│   │   └── test_official.csv
-│   └── external/
-│       ├── srinivasan_labels.csv
-│       ├── octdl_labels.csv
-│       └── octid_labels.csv
 │
 ├── src/
 │   ├── training/
@@ -93,19 +75,14 @@ Users should download the datasets from their original sources and organize them
 │       └── transforms.py
 │
 ├── scripts/
-│   ├── 01_train_baseline.sh
-│   ├── 02_train_enn.sh
-│   ├── 03_eval_external_baseline.sh
-│   ├── 04_eval_external_enn.sh
-│   ├── 05_tau_sweep.sh
-│   ├── 06_umass_filtering.sh
-│   └── 07_selective_coverage.sh
-│
-└── results/
-    └── example_outputs/
-```
+    ├── 01_train_baseline.sh
+    ├── 02_train_enn.sh
+    ├── 03_eval_external_baseline.sh
+    ├── 04_eval_external_enn.sh
+    ├── 05_tau_sweep.sh
+    ├── 06_umass_filtering.sh
+    └── 07_selective_coverage.sh
 
-Depending on the current cleanup stage of the repository, some folders or filenames may differ slightly. The intended final structure above separates training, evaluation, visualization, metadata, and reproducibility scripts.
 
 ## Environment Setup
 
@@ -120,20 +97,6 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-```
-
-A minimal `requirements.txt` should include:
-
-```text
-torch
-torchvision
-numpy
-pandas
-pillow
-scikit-learn
-matplotlib
-tqdm
-pyyaml
 ```
 
 ## Expected CSV Format
@@ -421,21 +384,13 @@ To reproduce the experiments:
 
 Because raw OCT datasets are not redistributed in this repository, exact reproduction requires access to the original datasets and correct local path configuration.
 
-## Citation
-
-If you use this code, please cite the corresponding paper:
-
-```text
-Chen, A. X., Jafarpisheh, N., Namdar, K., & Tyrrell, P. N.
-Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography.
-```
 
 ## Contact
 
 For questions about the repository, please contact:
 
-```text
-Abigail Xi Chen
+```
+Abigail Chen: abigail.chen@mail.utoronto.ca
 ```
 
 ## License
