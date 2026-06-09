@@ -245,6 +245,8 @@ alpha_CNV
 alpha_DME
 alpha_DRUSEN
 alpha_NORMAL
+entrophy
+strength
 u_mass
 p_max
 correct
@@ -342,8 +344,8 @@ The main evaluation metrics are:
 * Macro false-negative rate
 * Macro false-positive rate
 * Expected calibration error, or ECE
+* Adaptive ECE
 * Brier score
-* Retained coverage for uncertainty filtering and selective prediction
 
 External results are reported for each dataset and also averaged across the three external datasets.
 
@@ -375,7 +377,7 @@ Because raw OCT datasets are not redistributed in this repository, exact reprodu
 For questions about the repository, please contact:
 
 ```
-Abigail Chen: abigail.chen@mail.utoronto.ca
+abigail.chen@mail.utoronto.ca
 ```
 
 ## License
