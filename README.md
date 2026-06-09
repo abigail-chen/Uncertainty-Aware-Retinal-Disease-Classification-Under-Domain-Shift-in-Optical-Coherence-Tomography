@@ -23,9 +23,9 @@ The ENN produces Dirichlet-based evidence, allowing prediction of both class pro
 
 The Kermany OCT dataset was used for model training and internal testing.
 
-| Dataset     | Classes                  | Use                           |
-| ----------- | ------------------------ | ----------------------------- |
-| Kermany OCT | CNV, DME, DRUSEN, NORMAL | Training and internal testing |
+| Dataset     | Official source                                 | Classes used             | Use                           |
+| ----------- | ----------------------------------------------- | ------------------------ | ----------------------------- |
+| Kermany OCT | https://data.mendeley.com/datasets/rscbjbr9sj/1 | CNV, DME, DRUSEN, NORMAL | Training and internal testing |
 
 The final experiments used:
 
@@ -36,13 +36,14 @@ The final experiments used:
 
 External evaluation was performed on three independent OCT datasets:
 
-| Dataset           | Classes used        | Number of images |
-| ----------------- | ------------------- | ---------------- |
-| Srinivasan / DUKE | DRUSEN, DME, NORMAL | 3,231            |
-| OCTDL             | CNV, DME, NORMAL    | 1,710            |
-| OCTID             | CNV, NORMAL         | 261              |
+| Dataset           | Official source                                                    | Classes used        | Number of images |
+| ----------------- | ------------------------------------------------------------------ | ------------------- | ---------------: |
+| Srinivasan / DUKE | https://people.duke.edu/~sf59/Srinivasan_BOE_2014_dataset.htm      | DRUSEN, DME, NORMAL |            3,231 |
+| OCTDL             | https://data.mendeley.com/datasets/sncdhf53xc/4                    | CNV, DME, NORMAL    |            1,710 |
+| OCTID             | https://www.openicpsr.org/openicpsr/project/108503/version/V1/view | CNV, NORMAL         |              261 |
 
 These datasets differ in class composition, scanner type, and acquisition conditions, providing a realistic evaluation of model behavior under domain shift.
+
 
 ## Data Availability
 
@@ -295,14 +296,6 @@ To reproduce the workflow:
 
 Because raw OCT images are not redistributed in this repository, exact reproduction requires access to the original datasets and correct local path configuration.
 
-## Citation
-
-If you use this repository, please cite the corresponding paper:
-
-```text
-Chen, A. X., Jafarpisheh, N., Namdar, K., & Tyrrell, P. N.
-Uncertainty-Aware Retinal Disease Classification Under Domain Shift in Optical Coherence Tomography.
-```
 
 ## Contact
 
