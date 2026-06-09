@@ -99,29 +99,21 @@ Training and evaluation scripts expect CSV files containing image paths and labe
 A typical CSV should contain columns such as:
 
 ```text
-dst_path,label,split,patient_id
+dst_path,label,patient_id，split
 ```
 
 Example:
 
 ```text
-/path/to/image1.jpeg,CNV,train,patient_001
-/path/to/image2.jpeg,NORMAL,test,patient_002
+/path/to/image1.jpeg,CNV,patient_001，train
+/path/to/image2.jpeg,NORMAL,patient_002,test
 ```
 
 For external datasets, the CSV should contain at least:
 
 ```text
-dst_path,label
+dst_path,label，patient_id
 ```
-
-or:
-
-```text
-relpath,label
-```
-
-where `relpath` can be combined with a provided `data_root`.
 
 ## Model Training
 
