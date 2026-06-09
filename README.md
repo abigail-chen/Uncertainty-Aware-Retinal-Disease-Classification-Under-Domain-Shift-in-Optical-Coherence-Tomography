@@ -440,4 +440,4 @@ Abigail Xi Chen
 
 ## License
 
-This repository is released for academic and research use. Please see the `LICENSE` file for details.
+MIT License
